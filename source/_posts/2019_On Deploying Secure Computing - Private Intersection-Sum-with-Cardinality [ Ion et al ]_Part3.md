@@ -8,6 +8,8 @@ title: 论安全计算的部署：具有Cardinality的隐私集合交点求和�
 
 [2] Araki, T., Furukawa, J., Lindell, Y., Nof, A., Ohara, K.: Highthroughput semi-honest secure three-party computation with an honest majority. In: ACM Conference on Computer and Communications Security. pp. 805–817. ACM (2016) 
 
+<!--more-->
+
 [3] Bellare, M., Rogaway, P.: Random oracles are practical: A paradigm for designing efficient protocols. In: ACM Conference on Computer and Communications Security. pp. 62–73. ACM (1993) 
 
 [4] Bloom, B.H.: Space/time trade-offs in hash coding with allowable errors. Communications of the ACM 13(7), 422–426 (1970) 
