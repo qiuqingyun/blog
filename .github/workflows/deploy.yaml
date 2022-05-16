@@ -22,7 +22,7 @@ jobs:
       - name: set deploy key
         uses: webfactory/ssh-agent@v0.5.4
         with:
-            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            ssh-private-key: ${{ secrets.PRIVATE_SSH_KEY }}
       # 拉取文章
       - name: clone Paper_translation
         run: git clone https://github.com/qiuqingyun/Paper_translation.git
