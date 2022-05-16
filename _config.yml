@@ -228,7 +228,7 @@ theme_config:
       #about: /about/ || fa fa-user
       #tags: /tags/ || fa fa-tags
       #categories: /categories/ || fa fa-th
-      archives: /archives/ || fa fa-archive
+      # archives: /archives/ || fa fa-archive
       #schedule: /schedule/ || fa fa-calendar
       #sitemap: /sitemap.xml || fa fa-sitemap
       #commonweal: /404/ || fa fa-heartbeat
@@ -349,7 +349,7 @@ theme_config:
     # Post meta display settings
     post_meta:
       item_text: false
-      created_at: true
+      created_at: false
       updated_at:
         enable: false
         another_day: false
