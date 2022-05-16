@@ -9,8 +9,8 @@ if not os.path.exists(output_path):
     os.makedirs(output_path)
 # 读取文件列表
 files = []
-if os.path.isdir(path):
-    files_list = os.listdir(path)
+if os.path.isdir(input_path):
+    files_list = os.listdir(input_path)
     for file in files_list:
         if not os.path.isdir(file):
             filename, suffix = os.path.splitext(file)
