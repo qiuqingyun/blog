@@ -784,7 +784,7 @@ theme_config:
       only_pageview: false
 
     # Baidu Analytics
-    baidu_analytics: # <app_id>
+    baidu_analytics: e2bb420696fa154750e69f4f8e11acee
 
     # Growingio Analytics
     growingio_analytics: # <project_id>
