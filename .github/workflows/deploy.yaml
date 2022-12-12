@@ -17,6 +17,10 @@ jobs:
       # 签出
       - name: checkout
         uses: actions/checkout@v3
+      # 安装Pandoc
+      - name: Install Pandoc
+        run: |
+          sudo apt update && sudo apt install pandoc -y
       # 设置访问权限
       - name: set deploy keys
         uses: webfactory/ssh-agent@v0.5.4
