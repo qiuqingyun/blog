@@ -17,9 +17,6 @@ jobs:
       # 签出
       - name: checkout
         uses: actions/checkout@v3
-      # 拉取子模块
-      - name: pull submodule
-        run: git submodule update --init --recursive
       # 设置访问权限
       - name: set deploy keys
         uses: webfactory/ssh-agent@v0.5.4
