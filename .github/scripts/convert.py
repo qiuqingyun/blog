@@ -1,4 +1,4 @@
-import os, re, sys, traceback
+import os, re, sys, traceback, subprocess
 
 rootpath = os.getcwd()
 input_path = os.path.join(rootpath, "Paper_translation")
@@ -24,7 +24,7 @@ size = str(len(documents))
 for document_name in documents:
     document_path = os.path.join(input_path, document_name)
     document_write_path = os.path.join(output_path, document_name)
-    print("[" + str(index) + "/" + size + "] " + document_name, end="")
+    print(f"[{str(index)}/{size}] {document_name}")
     index += 1
     try:
         global f_in, f_out
@@ -33,6 +33,17 @@ for document_name in documents:
         year = result[1].strip()
         title = result[2].strip()
         authors = result[3].strip().split(",")
+        # 从git中提取文章创建时间和最后一次更新时间
+        # 创建时间
+        date_str = subprocess.getoutput(
+            rf'git  -C "{input_path}" log --diff-filter=A --follow --format="%as" -1 -- "{document_path}"'
+        ).strip()
+        # 最后一次更新时间
+        updated_str = subprocess.getoutput(
+            rf'git  -C "{input_path}" log -1 --format="%as" -- "{document_path}"'
+        ).strip()
+        print(f"date   : {date_str}\nupdated: {updated_str}")
+
         with open(document_path, "r") as f_in, open(document_write_path, "w") as f_out:
             # 提取标题
             content = f_in.read()
@@ -72,8 +83,10 @@ for document_name in documents:
             # 写入Front-matter
             f_out.write(
                 f"---\n"
-                f"title: >\n\t"
-                f"{title}\n"
+                f"title: >\n"
+                f"\t{title}\n"
+                f"date: {date_str}\n"
+                f"updated: {updated_str}\n"
                 f"categories: 论文翻译\n"
                 f"tags: \n"
                 f"- {year}\n"
@@ -95,9 +108,9 @@ for document_name in documents:
                     f"## {block_titles[1]}\n\n"
                     f"{content[blocks[block_titles[1]][0] : None].strip()}"
                 )
-            print(" Succeed")
+            print("Succeed\n")
     except Exception as e:
-        print(" Failed")
+        print("Failed\n")
         traceback.print_exc()
         os.remove(document_write_path)
 print("Conversion completed")
