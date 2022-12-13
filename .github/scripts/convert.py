@@ -22,12 +22,12 @@ if os.path.isdir(input_path):
 index = 1
 size = str(len(documents))
 for document_name in documents:
+    document_path = os.path.join(input_path, document_name)
+    document_write_path = os.path.join(output_path, document_name)
     print("[" + str(index) + "/" + size + "] " + document_name, end="")
     index += 1
     try:
         global f_in, f_out
-        document_path = os.path.join(input_path, document_name)
-        document_write_path = os.path.join(output_path, document_name)
         # 从文件名中提取论文英文名作为标题，提取发表时间和作者作为标签
         result = re.match(r"([0-9]{4})_(.*)\[ ((?:.(?!\[))*) \].md", document_name)
         year = result[1].strip()
@@ -40,16 +40,19 @@ for document_name in documents:
             # 分析二级标题
             title_two_iter = re.finditer(r"^## (.*)$", content, flags=re.MULTILINE)
             blocks = {}
+            block_titles = []
             start_pos = None
             block_title = None
             for iter in title_two_iter:
                 if start_pos is not None:
                     blocks[block_title] = [start_pos, iter.start()]
+                    block_titles.append(block_title)
                 start_pos = iter.end()
                 block_title = iter.group(1)
             blocks[block_title] = [start_pos, None]
+            block_titles.append(block_title)
             # 提取摘要
-            abstract_word = "摘要"
+            abstract_word = block_titles[0]
             abstract = (
                 content[blocks[abstract_word][0] : blocks[abstract_word][1]]
                 .strip()
@@ -57,33 +60,44 @@ for document_name in documents:
             )
             # 提取关键字，将其作为标签
             keywords_word = "关键字"
-            keywords_flag = False
             if keywords_word in blocks:
-                keywords_flag = True
                 keywords = content[
                     blocks[keywords_word][0] : blocks[keywords_word][1]
                 ].strip()
             else:
                 keywords = []
+
             # 写入新文件
+
+            # 写入Front-matter
             f_out.write(
-                "---\ntitle: >\n\t"
-                + title
-                + "\ndescription: >\n\t"
-                + abstract
-                + "\ncategories: 论文翻译"
-                + "\ntags:"
-                + "\n- "
-                + year
+                f"---\n"
+                f"title: >\n\t"
+                f"{title}\n"
+                f"categories: 论文翻译\n"
+                f"tags: \n"
+                f"- {year}\n"
             )
             for author in authors:
-                f_out.write("\n- Author_" + author)
+                f_out.write(f"- 作者_{author}\n")
             for keyword in keywords:
-                f_out.write("\n- " + keyword)
-            f_out.write("\n---\n")
-            f_out.write("## 摘要\n" + content[blocks[abstract_word][0] : None].strip())
+                f_out.write(f"- {keyword}\n")
+            f_out.write(f"---\n\n")
+            # 写入中文名与摘要
+            f_out.write(
+                f"## {title_one}\n\n"
+                f"{content[blocks[abstract_word][0] : blocks[abstract_word][1]].strip()}\n\n"
+                f"<!--more-->\n\n"
+            )
+            # 写入正文
+            if len(block_titles) > 1:
+                f_out.write(
+                    f"## {block_titles[1]}\n\n"
+                    f"{content[blocks[block_titles[1]][0] : None].strip()}"
+                )
             print(" Succeed")
     except Exception as e:
         print(" Failed")
         traceback.print_exc()
+        os.remove(document_write_path)
 print("Conversion completed")
