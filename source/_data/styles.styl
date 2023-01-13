@@ -1,0 +1,31 @@
+::selection {
+    background:#d3d3d3; 
+    color:#555;
+}
+code {
+    background: #f3f3f3;
+    color: #e15555;
+    padding: 2px 2px;
+    margin: 0 2px;
+}
+.copy-btn {
+    border-radius: 0 5px;
+    background: #ffffffee;
+}
+figure.highlight {
+    border-radius: 5px;
+}
+figure.highlight .table-container {
+    position: static;
+}
+figure.highlight .gutter {
+    position: sticky;
+    left: 0;
+    z-index: 3;
+    opacity: 0.9;
+    backdrop-filter: blur(10px);
+    filter: drop-shadow(0px 0px 3px #000);
+}
+figure.highlight tbody tr:nth-of-type(odd) {
+    background: var(--highlight-background);
+}

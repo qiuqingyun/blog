@@ -4,7 +4,7 @@
 
 # Site
 title: 记事本
-subtitle: "希望很久以后的自己也能看得懂"
+subtitle: "以空间换时间"
 description: ""
 keywords:
 author: qyqiu
@@ -13,7 +13,7 @@ timezone: ""
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://qyqiu.top
 permalink: :title/
 permalink_defaults:
 pretty_urls:
