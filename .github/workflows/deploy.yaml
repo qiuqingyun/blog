@@ -31,9 +31,9 @@ jobs:
       # 拉取翻译文章
       - name: clone Paper_translation
         run: git clone git@github.com:qiuqingyun/Paper_translation.git
-      # 拉取其他文章
-      - name: clone posts
-        run: git clone git@github.com:qiuqingyun/posts.git source/_posts/posts
+      # # 拉取其他文章
+      # - name: clone posts
+      #   run: git clone git@github.com:qiuqingyun/posts.git source/_posts/posts
       # 转换markdown文件
       - name: convert markdowns
         run: python .github/scripts/convert.py
